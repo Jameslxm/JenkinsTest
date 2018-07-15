@@ -1,20 +1,34 @@
 apply plugin: 'com.android.application'
-
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd-HH-mm')
+    return formattedDate
+}
+def verCode = 14
 android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.lxm.jenkinstest"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode verCode
+        versionName APP_VERSION
+        //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     // 签名配置
     signingConfigs {
         release {
             try {
-                storeFile file("JenkinsTest.jks")
+                //由于本地打包使用的是本机上的KeyStore
+                //而Jenkins打包用的是服务器上的KeyStore
+                //两个路径不一样
+                if("true".equals(IS_JENKINS)){
+                    storeFile file("服务器上KeyStore的路径")
+                }else {
+                    storeFile file("JenkinsTest.jks")
+                }
                 keyAlias "JenkinsTest"
                 keyPassword "JenkinsTest"
                 storePassword "JenkinsTest"
@@ -28,6 +42,44 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //渠道Flavors
+    productFlavors {
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            //新名字
+            def newName
+            //时间戳
+            def timeNow
+            //输出文件夹
+            def outDirectory
+            //是否为Jenkins打包，输出路径不同
+            if ("true".equals(IS_JENKINS)) {
+                //Jenkins打包输出到服务器路径
+                timeNow = BUILD_TIME
+                //BUILD_PATH为服务器输出路径
+                outDirectory = ""
+                //AutoBuildTest-v1.0.1-xiaomi-release.apk
+                newName = 'AutoBuildTest-v' + APP_VERSION + '-' + variant.productFlavors[0].name + '-' + variant.buildType.name + '.apk'
+            } else {
+                //本机打包输出在本机路径
+                timeNow = getDate()
+                if ('debug'.equals(variant.buildType.name)) {
+                    newName = "AutoBuildTest-v${APP_VERSION}-debug.apk"
+                } else {
+                    //AutoBuildTest-v1.0.1-xiaomi-release.apk
+                    newName = 'AutoBuildTest-v' + APP_VERSION + '-' + variant.productFlavors[0].name + '-' + variant.buildType.name + '.apk'
+                }
+            }
+            outputFileName = newName
         }
     }
 }
