@@ -6,11 +6,12 @@ def getDate() {
 }
 def verCode = 14
 android {
-    compileSdkVersion 27
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.lxm.jenkinstest"
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 25
         versionCode verCode
         versionName APP_VERSION
         //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
@@ -86,7 +87,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
