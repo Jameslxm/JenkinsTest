@@ -4,6 +4,6 @@ import android.util.Log;
 
 public class Dev {
     public static void dev(){
-        Log.d("debug","dev");
+        Log.d("debug","dev1111111111111111111");
     }
 }
