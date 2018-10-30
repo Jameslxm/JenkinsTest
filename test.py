@@ -12,6 +12,6 @@ def mymovefile(srcfile,dstfile):
         shutil.copyfile(srcfile,dstfile)          #移动文件
         print ("move %s -> %s" ,srcfile,dstfile)
         
-srcfile='./app/build/outputs/apk/xiaomi/release/AutoBuildTest-v1.0.1-xiaomi-release.apk'
+srcfile='./app/build/outputs/apk/xiaomi/release/AutoBuildTest-99-xiaomi-release.apk'
 dstfile='D:/download/AutoBuildTest-v1.0.1-xiaomi-release.apk'
 mymovefile(srcfile,dstfile)

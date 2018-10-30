@@ -46,43 +46,43 @@ android {
         }
     }
     //渠道Flavors
-    productFlavors {
-        wandoujia {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
-        }
-        xiaomi {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
-        }
-    }
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
-            //新名字
-            def newName
-            //时间戳
-            def timeNow
-            //输出文件夹
-            def outDirectory
-            //是否为Jenkins打包，输出路径不同
-            if ("true".equals(IS_JENKINS)) {
-                //Jenkins打包输出到服务器路径
-                timeNow = BUILD_TIME
-                //BUILD_PATH为服务器输出路径
-                outDirectory = ""
-                //AutoBuildTest-v1.0.1-xiaomi-release.apk
-                newName = 'AutoBuildTest-v' + APP_VERSION + '-' + variant.productFlavors[0].name + '-' + variant.buildType.name + '.apk'
-            } else {
-                //本机打包输出在本机路径
-                timeNow = getDate()
-                if ('debug'.equals(variant.buildType.name)) {
-                    newName = "AutoBuildTest-v${APP_VERSION}-debug.apk"
-                } else {
-                    //AutoBuildTest-v1.0.1-xiaomi-release.apk
-                    newName = 'AutoBuildTest-v' + APP_VERSION + '-' + variant.productFlavors[0].name + '-' + variant.buildType.name + '.apk'
-                }
-            }
-            outputFileName = newName
-        }
-    }
+//    productFlavors {
+//        wandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//        }
+//        xiaomi {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+//        }
+//    }
+//    android.applicationVariants.all { variant ->
+//        variant.outputs.all {
+//            //新名字
+//            def newName
+//            //时间戳
+//            def timeNow
+//            //输出文件夹
+//            def outDirectory
+//            //是否为Jenkins打包，输出路径不同
+//            if ("true".equals(IS_JENKINS)) {
+//                //Jenkins打包输出到服务器路径
+//                timeNow = BUILD_TIME
+//                //BUILD_PATH为服务器输出路径
+//                outDirectory = ""
+//                //AutoBuildTest-v1.0.1-xiaomi-release.apk
+//                newName = 'AutoBuildTest-v' + APP_VERSION + '-' + variant.productFlavors[0].name + '-' + variant.buildType.name + '.apk'
+//            } else {
+//                //本机打包输出在本机路径
+//                timeNow = getDate()
+//                if ('debug'.equals(variant.buildType.name)) {
+//                    newName = "AutoBuildTest-v${APP_VERSION}-debug.apk"
+//                } else {
+//                    //AutoBuildTest-v1.0.1-xiaomi-release.apk
+//                    newName = 'AutoBuildTest-v' + APP_VERSION + '-' + variant.productFlavors[0].name + '-' + variant.buildType.name + '.apk'
+//                }
+//            }
+//            outputFileName = newName
+//        }
+//    }
 }
 
 dependencies {
