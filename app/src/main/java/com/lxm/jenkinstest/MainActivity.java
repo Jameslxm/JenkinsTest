@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+    private String A1;
+    private String B2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("debug","onCreate");
+
         findViewById(R.id.tv_start_application).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
